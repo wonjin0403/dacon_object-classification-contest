@@ -1,6 +1,6 @@
 # DACON Basic 사물 이미지 분류 경진대회
 
-대회 링크:
+대회 링크: https://dacon.io/competitions/official/235874/overview/description
 
 순위 2등
 
