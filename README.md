@@ -107,6 +107,7 @@ script 폴더 안에 존재하는 .ini 파일로 학습에 필요한 parameter�
   cd ./data
   unzip new_train.zip
   unzip new_test.zip
+  unzip test.zip
   cd ..
   ```
 
