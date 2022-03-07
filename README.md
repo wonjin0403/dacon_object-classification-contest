@@ -4,6 +4,45 @@
 
 순위 2등
 
+## 학습 방법 및 실험 내용
+
+1. 모델
+   ResNet18, Efficientnet-b0, ViT, ConvNext 모델을 사용하여 실험을 진행했고, 최종적으로 ResNet18을 선택했습니다. CIFAR10 SOTA 모델이 ViT‑H/14모델인 것을 확인하고 ViT를 시도해 보았으나 ResNet18과 유사한 성능을 보였습니다. Efficientnet-b0 모델도 ResNet18과 큰 차이를 보이지 않았고 ConvNext는 모델 학습시간이 너무 오래 걸려 끝까지 학습을 진행하지 못했습니다. 결과적으로 성능에 큰 차이가 없고 학습시간이 빠른 ResNet18을 finetuning 하는 방향으로 실험을 진행하게 되었습니다.
+
+2. 데이터
+
+   - train 데이터의 80%를 학습용으로, 20%를 test 용으로 사용했습니다.
+
+   - Resize(128 x 128): ResNet18에 있어서 128보다 큰 size로 Resize 했을 때와 차이가 없어 성능을 유지하는 가장 작은 size를 선택했습니다.
+
+   - Augmentation
+
+     - RandomCrop(32, padding=4)
+     - HorizontalFlip: Vertical flip과 함께 사용할 때보다 Horizontal flip만 사용할 때 acc가 더 향상되었습니다.
+     - CIFAR10 Autoaugmentation: augmentation을 통해 90%에서 91%까지 acc 상승효과를 얻을 수 있었습니다. 외부 데이터를 사용하거나 pretrained 된 모델을 사용한 것이 아니라 논문에 나와있는 augmentation 종류와 수치만을 이용했습니다. 
+       관련눈문(AutoAugment: Learning Augmentation Strategies from Data)
+       코드는 "https://github.com/DeepVoltaire/AutoAugment"를 참고했습니다.
+
+     * Cutout(n_holes=1, length=16): Cutout을 통해 91%에서 92%까지 acc가 상승하는 효과를 얻을 수 있었습니다. length 값은 “Improved Regularization of Convolutional Neural Networks with Cutout” 논문을 참고하여 정했습니다. 논문에 내용을 보면 CIFAR-10에 대해서 16 x 16 size로 cutout 한 것을 확인할 수 있고 이를 통해 성능이 향상된 것을 확인할 수 있습니다.
+
+     * CutMix: 성능 향상에는 효과가 없었지만 학습 속도를 더 빠르게 해주었습니다.
+
+3. 학습
+
+   - optimizer로는 SGD를 사용했습니다. adam, Radam, adamW 등을 사용해보았으나 SGD가 가장 좋은 성능을 보였습니다.
+
+   - 스케줄러로는 ReduceLROnPlateau를 사용했습니다. min_lr가 일정 이상 떨어지면 더 이상 성능이 향상되지 않아 min_lr=0.000001로 설정했습니다.
+
+   - 5 fold로 학습을 진행했습니다.
+
+4. 추론
+
+   - Test set에 대해서 hard voting보다 soft voting 이 더 좋은 성능 보였기 때문에 soft voting 방식을 이용했습니다. 
+
+   - TTA: HorizontalFlip, Rotate90(angles=[0, 30])만을 이용했습니다.
+
+   - k fold와 TTA를 통해 92%에서 93%이상으로 성능이 향상되었습니다.
+
 ## 개발환경
 
 "Ubuntu 16.04.6 LTS"
