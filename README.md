@@ -99,13 +99,24 @@ script 폴더 안에 존재하는 .ini 파일로 학습에 필요한 parameter�
 *  seed: random seed
 *  lr: 0.01
 
+## 데이터 unzip
+
+* data 폴더에 있는 new_train.zip과 new_test.zip을 unzip
+
+  ```shell
+  cd ./data
+  unzip new_train.zip
+  unzip new_test.zip
+  cd ..
+  ```
+
 ## Train
 
 * 학습시킬 데이터의 경로를 설정하고 output_dir에 모델이 저장될 폴더 이름을 설정 후 main.py 실행
 
-  * ```shell
-    python main.py script_sample
-    ```
+  ```shell
+  python main.py script_sample
+  ```
 
 ## Test 및 Inference
 
@@ -120,4 +131,5 @@ script 폴더 안에 존재하는 .ini 파일로 학습에 필요한 parameter�
     ```
 
 * test 시 accuracy가 출력됨
+
 * inference 시 output_dir에 입력한 최종 모델이 저장된 폴더 내부에 final_output.csv 파일이 생성됨

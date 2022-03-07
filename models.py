@@ -7,7 +7,6 @@ class RESNET18(nn.Module):
     def __init__(self, out_channels):
         super(RESNET18, self).__init__()
         self.res18 = models.resnet18(pretrained=False)
-        #self.res18.conv1 = nn.Conv2d(in_channels, 64, kernel_size=7, stride=2, padding=3,bias=False) #36
         self.res18.fc = nn.Linear(in_features=self.res18.fc.in_features, out_features=out_channels)
         self.feature1 = nn.Sequential(*(list(self.res18.children())[0:8]))
         self.feature2 = nn.Sequential(list(self.res18.children())[8])
