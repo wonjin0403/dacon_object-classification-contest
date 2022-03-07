@@ -40,44 +40,45 @@ pip install ttach
 python main.py script_sample
 ```
 
-*  script_sample paramter
+## script_sample parameter 설정
 
-  * script 폴더 안에 존재하는 .ini 파일
-  * data_path: split된 train, test set을 포함하는 폴더의 주소
-  * test_path: 제출용 test set
-  * csv_path: sample_submission.csv 주소
-  * output_dir: model이 저장될 폴더 이름
-  * batch_size: 128
-  * num_epoch: 2000
-  * fold: 5
-  * cutmix: 1
-  * gpus: 사용할 gpu index
-  * phase: train or test or inference
-    * train: 학습
-    * test: evaluation
-    * inference: 제출용 output 제작
-  * seed: random seed
-  * lr: 0.01
+script 폴더 안에 존재하는 .ini 파일로 학습에 필요한 parameter를 설정
 
-* train
+*  data_path: split된 train, test set을 포함하는 폴더의 주소
+*  test_path: 제출용 test set
+*  csv_path: sample_submission.csv 주소
+*  output_dir: model이 저장될 폴더 이름
+*  batch_size: 128
+*  num_epoch: 2000
+*  fold: 5
+*  cutmix: 1
+*  gpus: 사용할 gpu index
+*  phase: train or test or inference
+  * train: 학습
+  * test: evaluation
+  * inference: 제출용 output 제작
+*  seed: random seed
+*  lr: 0.01
 
-  * 학습시킬 데이터의 경로를 설정하고 output_dir에 모델이 저장될 폴더 이름을 설정 후 main.py 실행
+## Train
 
-    * ```shell
-      python main.py script_sample
-      ```
+* 학습시킬 데이터의 경로를 설정하고 output_dir에 모델이 저장될 폴더 이름을 설정 후 main.py 실행
 
-* test 및 inference
+  * ```shell
+    python main.py script_sample
+    ```
 
-  * 대회 최종 제출 모델 주소
+## Test 및 Inference
 
-    * results/final_model
+* 대회 최종 제출 모델 주소
 
-  * script_sample.ini 파일에서 최종 모델이 저장된 폴더의 이름을 output_dir에 설정하고 phase를 test or inference로 설정한 후 main.py 실행
+  * results/final_model
 
-    * ```shell
-      python main.py script_sample
-      ```
+* script_sample.ini 파일에서 최종 모델이 저장된 폴더의 이름을 output_dir에 설정하고 phase를 test or inference로 설정한 후 main.py 실행
 
-  * test 시 accuracy가 출력됨
-  * inference 시 output_dir에 입력한 최종 모델이 저장된 폴더 내부에 final_output.csv 파일이 생성됨
+  * ```shell
+    python main.py script_sample
+    ```
+
+* test 시 accuracy가 출력됨
+* inference 시 output_dir에 입력한 최종 모델이 저장된 폴더 내부에 final_output.csv 파일이 생성됨
